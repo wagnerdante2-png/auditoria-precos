@@ -2,17 +2,22 @@
 
 Painel web estático e navegável para reuniões, construído a partir da planilha **Controle de Auditoria de Preços**.
 
-## O que está disponível
+## Versão premium v1.1
 
-- **Visão Executiva** com KPIs de etiquetas auditadas, meta, atingimento, divergências, produtos sem preço e descontos.
-- **Navegação por competência**, de **2023-08** a **2026-08** conforme disponibilidade da base.
-- **Escopo Total Rede, Regional ou Loja**.
-- **Visão por Lojas** com busca, filtro por regional e status de meta.
-- **Visão por Regionais** com consolidação dos indicadores.
+A versão atual foi refinada para uso executivo em reunião, com layout mais compacto e corporativo, navegação global por competência/escopo e novas leituras gerenciais.
+
+### O que está disponível
+
+- **Visão Executiva** com KPIs de etiquetas auditadas, atingimento, divergências por mil, produtos sem preço por mil, descontos e lojas na meta.
+- **Análise Comparativa** com comparação contra mês anterior e ano anterior, benchmark por regional/loja e maiores evoluções/retrações do período.
+- **Navegação global por competência**, de **2023-08** a **2026-08** conforme disponibilidade da base.
+- **Escopo Total Rede, Regional ou Loja**, aplicado às visões analíticas.
+- **Visão por Lojas** com busca em tempo real, filtro por regional, semáforo de situação e acesso direto à visão/recomendações da loja.
+- **Visão por Regionais** com consolidação, tendência e acesso direto à visão/recomendações da regional.
 - **Evolução Mensal** em gráfico de linhas para as cinco métricas principais.
-- **Base de Dados** navegável e exportação da competência para CSV.
-- **Sem backend e sem build**: basta abrir `index.html` no navegador.
-- A base foi **embarcada no próprio projeto**, portanto funciona também sem conexão com internet.
+- **Recomendações** geradas por regras determinísticas e explicáveis, considerando meta, tendência e benchmark da própria base.
+- **Base de Dados** com semáforos, setas de tendência versus mês anterior e exportação para CSV.
+- **Sem backend complexo e sem build**: a aplicação é totalmente estática e a base está embarcada.
 
 ## Dados incorporados
 
@@ -31,6 +36,8 @@ A aplicação utiliza diretamente as abas históricas de **ETIQUETAS**, **DIVERG
 /
 ├── index.html
 ├── assets/
+│   ├── app-v11.js
+│   ├── premium.css
 │   ├── app.js
 │   └── styles.css
 └── data/
@@ -47,11 +54,11 @@ Os dados foram fracionados em módulos estáticos apenas para manter o repositó
 
 ## Execução
 
-Abra `index.html` no Chrome, Edge ou outro navegador moderno. Não é necessário instalar Node, servidor local, banco de dados ou dependências.
+Abra `index.html` no Chrome, Edge ou outro navegador moderno. Não é necessário instalar Node, banco de dados ou dependências. A versão portátil para Windows pode encapsular esses mesmos arquivos e abrir o painel automaticamente no navegador.
 
 ## Integridade
 
-A competência 08/2026 foi validada contra os totalizadores da planilha:
+A competência 08/2026 permanece validada contra os totalizadores da planilha:
 
 - Etiquetas auditadas: **424.421**
 - Divergências: **2.820**
@@ -59,3 +66,10 @@ A competência 08/2026 foi validada contra os totalizadores da planilha:
 - Quantidade de descontos: **3.028**
 - Valor de descontos: **R$ 33.419,38**
 - Lojas com pelo menos 6.000 etiquetas: **42 de 60**
+
+## Validações v1.1
+
+- `app-v11.js` validado sintaticamente com Node.
+- Todas as sete visões foram instanciadas em teste automatizado de runtime: Visão Executiva, Análise Comparativa, Lojas, Regionais, Evolução Mensal, Recomendações e Base de Dados.
+- Filtros globais de competência, Regional e Loja foram exercitados em teste automatizado.
+- A asserção interna da competência 08/2026 continua ativa no carregamento da aplicação.

@@ -1,60 +1,64 @@
 # Auditoria de Preços — Painel Corporativo
 
-Painel web estático e navegável para reuniões, construído a partir da planilha **Controle de Auditoria de Preços**.
+Painel web estático, navegável e totalmente local para reuniões, construído a partir da planilha **Controle de Auditoria de Preços**.
 
-## Versão Enterprise v1.2
+## Versão Enterprise Prime v1.3
 
-A v1.2 foi refinada especificamente para leitura executiva rápida em reunião. O visual dark permanece, porém com linguagem **enterprise/corporativa**, menor uso de efeitos luminosos e aplicação de cor concentrada em status, tendências, alertas e gráficos.
+A v1.3 aprofunda a leitura executiva e corrige a semântica dos indicadores visuais.
 
-### Melhorias v1.2
+### Principais melhorias
 
-- **Scroll restaurado em todas as abas**, mantendo apenas a barra lateral e o cabeçalho como elementos fixos/sticky quando aplicável.
-- **Cards de Lojas e Regionais compactados**, com maior densidade de informação e mais unidades visíveis simultaneamente.
-- **Visão Executiva em “10 segundos”**, com gauge de atingimento, snapshot de divergências/sem preço/cobertura/descontos, prioridades e benchmark regional.
-- **Análise Comparativa redesenhada**, deixando explícitos os três períodos: competência atual, mês anterior e mesmo mês do ano anterior. Os comparativos utilizam barras vetoriais, deltas e benchmark visual.
-- **Recomendações mais diretas**, estruturadas em problema identificado → evidência → recomendação → responsável sugerido. A competência selecionada é a referência principal; histórico só é destacado quando há tendência persistente.
-- **Base de Dados com legenda operacional** para semáforos e setas, filtros por regional/status, busca por loja e indicação explícita de que as setas representam a variação contra o mês anterior.
-- **Filtros globais de competência, Total Rede, Regional e Loja** preservados e aplicados às visões analíticas.
-- **Sem backend complexo e sem build**: toda a base permanece embarcada e funciona localmente.
+- **Tooltips explicativos** em semáforos e setas. Ao passar o mouse, o painel informa o período, a referência, o valor anterior/atual e o motivo do status.
+- **Evolução Mensal refinada** com gráfico de linha mais nítido e dois gráficos complementares: colunas dos últimos 12 meses e variação percentual mês a mês.
+- **Semáforo da Base de Dados corrigido**:
+  - **Crítico:** loja abaixo da meta de 6.000 etiquetas **ou** quantidade/valor de descontos acima da média da rede na competência selecionada.
+  - **Atenção:** meta atingida, porém quantidade ou valor de descontos entre 80% e 100% da média da rede.
+  - **Saudável:** meta atingida e descontos abaixo da faixa de atenção.
+- **Base de Dados** passa a exibir também quantidade e valor de descontos do mesmo mês do ano anterior.
+- **Relatório PDF em todas as abas**, respeitando competência, escopo e filtros da tela. A impressão foi preparada para **A4 horizontal**.
+- **Modal Cenário** nas abas Lojas e Regionais com comparativos de etiquetas, descontos, média da rede, regional e ano anterior, além de séries históricas.
+- **Design minimalista enterprise**, com fundo totalmente dark, superfícies planas, bordas discretas e cores concentradas em gráficos, sinais e estados.
 
-## Regras visuais da Base de Dados
+## Regras de tendência
 
-### Semáforo — situação da competência selecionada
+As setas representam a variação matemática em relação à competência imediatamente anterior:
 
-Para cada loja, o semáforo considera **atingimento da meta** e a qualidade relativa à **média da rede na mesma competência**:
+- **▲** valor subiu;
+- **▼** valor caiu;
+- **verde** = movimento favorável para o indicador;
+- **vermelho** = movimento desfavorável.
 
-- **Saudável (verde):** atingimento ≥ 100% e taxas de divergências/sem preço até 115% da média da rede.
-- **Atenção (âmbar):** atingimento entre 85% e 99,9% ou indicador de qualidade entre 115% e 150% da média da rede.
-- **Crítico (vermelho):** atingimento < 85% ou indicador de qualidade acima de 150% da média da rede.
-
-### Setas — tendência versus mês anterior
-
-- A direção **▲ / ▼** mostra a variação matemática entre a competência selecionada e a competência imediatamente anterior.
-- A cor representa o efeito gerencial do movimento: **verde = favorável**, **vermelho = desfavorável**.
-- Em **etiquetas/atingimento**, subir é favorável.
-- Em **divergências, produtos sem preço e descontos**, reduzir é tratado como favorável para a leitura operacional.
+Para etiquetas/atingimento, aumento é favorável. Para divergências, produtos sem preço e descontos, redução é considerada favorável na leitura operacional.
 
 ## Dados incorporados
 
-- **60 lojas**.
-- **6 regionais vigentes**.
-- Histórico de **descontos desde 08/2023**.
-- Histórico de **etiquetas, divergências e produtos sem preço desde 11/2024**.
-- Última competência com dados na planilha analisada: **08/2026**.
-- Meta operacional considerada: **6.000 etiquetas por loja com registro no mês**.
+- 60 lojas;
+- 6 regionais vigentes;
+- descontos desde 08/2023;
+- etiquetas, divergências e produtos sem preço desde 11/2024;
+- última competência da planilha: 08/2026;
+- meta operacional: 6.000 etiquetas por loja/mês.
 
-A aplicação utiliza diretamente as abas históricas de **ETIQUETAS**, **DIVERGÊNCIAS**, **SEM PREÇO** e os dois blocos de **DESCONTOS** (valor e quantidade), sem depender das fórmulas da aba de resumo.
+## Integridade de 08/2026
 
-## Estrutura
+- Etiquetas auditadas: **424.421**
+- Divergências: **2.820**
+- Produtos sem preço: **21.184**
+- Quantidade de descontos: **3.028**
+- Valor de descontos: **R$ 33.419,38**
+- Lojas com pelo menos 6.000 etiquetas: **42 de 60**
+
+## Estrutura ativa v1.3
 
 ```text
 /
 ├── index.html
 ├── assets/
-│   ├── app-v12-core.js
-│   ├── app-v12-main.js
-│   ├── app-v12-analytics.js
-│   ├── app-v12-init.js
+│   ├── app-v13-core.js
+│   ├── app-v13-main.js
+│   ├── app-v13-analytics.js
+│   ├── app-v13-init.js
+│   ├── enterprise-v13.css
 │   ├── enterprise-v12.css
 │   ├── premium.css
 │   └── styles.css
@@ -68,26 +72,4 @@ A aplicação utiliza diretamente as abas históricas de **ETIQUETAS**, **DIVERG
     └── finalize.js
 ```
 
-Os dados foram fracionados em módulos estáticos apenas para manter o projeto organizado; para o usuário final, a navegação funciona como uma base única.
-
-## Execução
-
-Abra `index.html` no Chrome, Edge ou outro navegador moderno. Não é necessário instalar Node, banco de dados ou dependências. A versão portátil para Windows encapsula os mesmos arquivos e abre o painel automaticamente no navegador.
-
-## Integridade
-
-A competência 08/2026 permanece validada contra os totalizadores da planilha:
-
-- Etiquetas auditadas: **424.421**
-- Divergências: **2.820**
-- Produtos sem preço: **21.184**
-- Quantidade de descontos: **3.028**
-- Valor de descontos: **R$ 33.419,38**
-- Lojas com pelo menos 6.000 etiquetas: **42 de 60**
-
-## Validações v1.2
-
-- Os quatro módulos JavaScript da v1.2 foram validados sintaticamente com Node.
-- As sete visões foram instanciadas em teste automatizado de runtime: **Visão Executiva, Análise Comparativa, Lojas, Regionais, Evolução Mensal, Recomendações e Base de Dados**.
-- Filtros globais de competência/escopo e filtros de base foram exercitados no runtime de teste.
-- A asserção interna da competência 08/2026 continua ativa no carregamento da aplicação.
+Não é necessário backend, Node, banco de dados ou conexão com a internet para o uso normal da versão local.

@@ -34,8 +34,16 @@ A aplicação utiliza diretamente as abas históricas de **ETIQUETAS**, **DIVERG
 │   ├── app.js
 │   └── styles.css
 └── data/
-    └── auditoria-data.js
+    ├── core.js
+    ├── labels.js
+    ├── divergences.js
+    ├── noPrice.js
+    ├── discountCount.js
+    ├── discountValue.js
+    └── finalize.js
 ```
+
+Os dados foram fracionados em módulos estáticos apenas para manter o repositório leve e fácil de manter; para o usuário final, a navegação funciona como uma base única.
 
 ## Execução
 
@@ -50,3 +58,4 @@ A competência 08/2026 foi validada contra os totalizadores da planilha:
 - Produtos sem preço: **21.184**
 - Quantidade de descontos: **3.028**
 - Valor de descontos: **R$ 33.419,38**
+- Lojas com pelo menos 6.000 etiquetas: **42 de 60**

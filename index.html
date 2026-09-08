@@ -1,53 +1,61 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="theme-color" content="#040b17" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#04070b">
   <title>Auditoria de Preços | Maravilhas do Lar</title>
-  <link rel="stylesheet" href="assets/styles.css" />
-  <link rel="stylesheet" href="assets/premium.css" />
-  <link rel="stylesheet" href="assets/enterprise-v12.css" />
-  <link rel="stylesheet" href="assets/enterprise-v13.css" />
-  <link rel="stylesheet" href="assets/enterprise-v132.css" />
+  <link rel="stylesheet" href="assets/v14.css">
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">AP</div>
-        <div>
-          <strong>Auditoria de Preços</strong>
-          <span>Inteligência Operacional</span>
-        </div>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-zone">
+      <img class="mdl-logo" src="assets/logo-mdl.svg" alt="Maravilhas do Lar">
+      <div class="product-name"><strong>Auditoria de Preços</strong><span>Inteligência Operacional</span></div>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <button class="nav-item active" data-view="dashboard"><span>◆</span>Visão Executiva</button>
+      <button class="nav-item" data-view="comparison"><span>⇄</span>Análise Comparativa</button>
+      <button class="nav-item" data-view="stores"><span>▦</span>Lojas</button>
+      <button class="nav-item" data-view="regions"><span>◈</span>Regionais</button>
+      <button class="nav-item" data-view="evolution"><span>⌁</span>Evolução Mensal</button>
+      <button class="nav-item" data-view="recommendations"><span>✦</span>Recomendações</button>
+      <button class="nav-item" data-view="database"><span>≣</span>Base de Dados</button>
+    </nav>
+    <div class="area-seal"><span>Área responsável</span><img src="assets/selo-processos.svg" alt="BPM Escritório de Processos"></div>
+    <div class="base-status"><i></i><div><strong>Base embarcada</strong><span>Sem backend • uso local</span></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div class="top-title"><span class="eyebrow">PAINEL CORPORATIVO</span><h1 id="page-title">Visão Executiva</h1><p id="page-subtitle">Síntese executiva para reunião e tomada de decisão.</p></div>
+      <div class="global-controls">
+        <label><span>Competência</span><div class="month-control"><button id="prev-month" class="icon-btn" type="button">‹</button><select id="month-select"></select><button id="next-month" class="icon-btn" type="button">›</button></div></label>
+        <label><span>Escopo</span><select id="scope-type"><option value="network">Total Rede</option><option value="region">Regional</option><option value="store">Loja</option></select></label>
+        <label class="wide"><span>Seleção</span><select id="scope-detail" disabled><option value="">Rede completa</option></select></label>
+        <button id="print-report" class="report-btn" type="button">Gerar relatório PDF</button>
       </div>
-      <nav class="nav" aria-label="Navegação principal">
-        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">◆</span><span>Visão Executiva</span></button>
-        <button class="nav-item" data-view="comparison"><span class="nav-icon">⇄</span><span>Análise Comparativa</span></button>
-        <button class="nav-item" data-view="stores"><span class="nav-icon">▦</span><span>Lojas</span></button>
-        <button class="nav-item" data-view="regions"><span class="nav-icon">◈</span><span>Regionais</span></button>
-        <button class="nav-item" data-view="evolution"><span class="nav-icon">⌁</span><span>Evolução Mensal</span></button>
-        <button class="nav-item" data-view="recommendations"><span class="nav-icon">✦</span><span>Recomendações</span></button>
-        <button class="nav-item" data-view="database"><span class="nav-icon">≣</span><span>Base de Dados</span></button>
-      </nav>
-      <div class="sidebar-foot"><div class="status-dot"></div><div><strong>Base embarcada</strong><span>Sem backend • Navegação local</span></div></div>
-    </aside>
-    <main class="main">
-      <header class="topbar">
-        <div class="topbar-title"><p class="eyebrow">PAINEL CORPORATIVO</p><h1 id="page-title">Visão Executiva</h1><p id="page-subtitle" class="page-subtitle">Síntese executiva para reunião e tomada de decisão.</p></div>
-        <div class="topbar-controls" aria-label="Filtros globais">
-          <label class="control"><span>Competência</span><div class="month-control"><button id="prev-month" class="icon-btn" type="button" title="Mês anterior" aria-label="Mês anterior">‹</button><select id="month-select" aria-label="Competência"></select><button id="next-month" class="icon-btn" type="button" title="Próximo mês" aria-label="Próximo mês">›</button></div></label>
-          <label class="control"><span>Escopo</span><select id="scope-type" aria-label="Escopo"><option value="network">Total Rede</option><option value="region">Regional</option><option value="store">Loja</option></select></label>
-          <label class="control control-wide" id="scope-detail-wrap"><span>Seleção</span><select id="scope-detail" disabled aria-label="Seleção de escopo"><option value="">Rede completa</option></select></label>
-          <button id="print-report" class="ghost-btn report-btn" type="button" title="Gerar relatório em PDF">Gerar relatório PDF</button>
-        </div>
-      </header>
-      <section id="view-dashboard" class="view active"></section><section id="view-comparison" class="view"></section><section id="view-stores" class="view"></section><section id="view-regions" class="view"></section><section id="view-evolution" class="view"></section><section id="view-recommendations" class="view"></section><section id="view-database" class="view"></section>
-    </main>
-  </div>
-  <div id="app-modal-root"></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="data/core.js"></script><script src="data/labels.js"></script><script src="data/divergences.js"></script><script src="data/noPrice.js"></script><script src="data/discountCount.js"></script><script src="data/discountValue.js"></script><script src="data/finalize.js"></script>
-  <script src="assets/app-v13-core.js"></script><script src="assets/app-v13-main.js"></script><script src="assets/app-v13-analytics.js"></script><script src="assets/app-v13-init.js"></script><script src="assets/scenario-fix-v131.js"></script><script src="assets/app-v132-fix.js"></script>
+    </header>
+    <div id="print-banner" class="print-banner"></div>
+    <section id="view-dashboard" class="view active"></section>
+    <section id="view-comparison" class="view"></section>
+    <section id="view-stores" class="view"></section>
+    <section id="view-regions" class="view"></section>
+    <section id="view-evolution" class="view"></section>
+    <section id="view-recommendations" class="view"></section>
+    <section id="view-database" class="view"></section>
+  </main>
+</div>
+<div id="modal-root"></div>
+<div id="toast" class="toast"></div>
+<script src="data/core.js"></script>
+<script src="data/labels.js"></script>
+<script src="data/divergences.js"></script>
+<script src="data/noPrice.js"></script>
+<script src="data/discountCount.js"></script>
+<script src="data/discountValue.js"></script>
+<script src="data/finalize.js"></script>
+<script src="assets/v14.js"></script>
 </body>
 </html>

@@ -2,22 +2,26 @@
 
 Painel web estático, navegável e totalmente local para reuniões, construído a partir da planilha **Controle de Auditoria de Preços**.
 
-## Versão Enterprise Prime v1.3
+## Versão Enterprise Prime v1.3.2
 
-A v1.3 aprofunda a leitura executiva e corrige a semântica dos indicadores visuais.
+A v1.3.2 corrige o pacote v1.3.1 e consolida a rodada visual/funcional solicitada para reunião.
 
 ### Principais melhorias
 
-- **Tooltips explicativos** em semáforos e setas. Ao passar o mouse, o painel informa o período, a referência, o valor anterior/atual e o motivo do status.
-- **Evolução Mensal refinada** com gráfico de linha mais nítido e dois gráficos complementares: colunas dos últimos 12 meses e variação percentual mês a mês.
-- **Semáforo da Base de Dados corrigido**:
-  - **Crítico:** loja abaixo da meta de 6.000 etiquetas **ou** quantidade/valor de descontos acima da média da rede na competência selecionada.
+- **Botão Cenário corrigido de forma definitiva** em Lojas e Regionais, com acionamento delegado e modal independente do hotfix anterior.
+- **Gráficos de Evolução confinados à área visual**, evitando linhas/eixos extrapolarem o container.
+- **Modal Cenário com marcadores, grade e escala**, deixando a leitura das séries históricas mais clara.
+- **Comparativos do modal**: selecionado x regional/rede x mesmo mês do ano anterior para etiquetas, quantidade de descontos e valor de descontos.
+- **Logotipo Maravilhas do Lar** otimizado e aplicado no topo da navegação lateral.
+- **Selo BPM / Escritório de Processos** aplicado de forma reduzida na barra lateral.
+- **Fundo dark enterprise reforçado**, com superfícies mais discretas e cor concentrada em gráficos, estados e sinais.
+- **Tooltips explicativos** em semáforos e setas, informando período, referência e motivo do status.
+- **Evolução Mensal** mantém gráfico de linha e gráficos complementares de colunas e variação mês a mês.
+- **Semáforo da Base de Dados**:
+  - **Crítico:** abaixo da meta de 6.000 etiquetas **ou** quantidade/valor de descontos acima da média da rede na competência selecionada.
   - **Atenção:** meta atingida, porém quantidade ou valor de descontos entre 80% e 100% da média da rede.
   - **Saudável:** meta atingida e descontos abaixo da faixa de atenção.
-- **Base de Dados** passa a exibir também quantidade e valor de descontos do mesmo mês do ano anterior.
-- **Relatório PDF em todas as abas**, respeitando competência, escopo e filtros da tela. A impressão foi preparada para **A4 horizontal**.
-- **Modal Cenário** nas abas Lojas e Regionais com comparativos de etiquetas, descontos, média da rede, regional e ano anterior, além de séries históricas.
-- **Design minimalista enterprise**, com fundo totalmente dark, superfícies planas, bordas discretas e cores concentradas em gráficos, sinais e estados.
+- **Relatório PDF em todas as abas**, respeitando competência, escopo e filtros da tela, preparado para A4 horizontal.
 
 ## Regras de tendência
 
@@ -48,7 +52,7 @@ Para etiquetas/atingimento, aumento é favorável. Para divergências, produtos 
 - Valor de descontos: **R$ 33.419,38**
 - Lojas com pelo menos 6.000 etiquetas: **42 de 60**
 
-## Estrutura ativa v1.3
+## Estrutura ativa
 
 ```text
 /
@@ -58,18 +62,14 @@ Para etiquetas/atingimento, aumento é favorável. Para divergências, produtos 
 │   ├── app-v13-main.js
 │   ├── app-v13-analytics.js
 │   ├── app-v13-init.js
+│   ├── app-v132-fix.js
 │   ├── enterprise-v13.css
-│   ├── enterprise-v12.css
-│   ├── premium.css
-│   └── styles.css
+│   ├── enterprise-v132.css
+│   ├── logo-mdl.svg
+│   ├── selo-processos.svg
+│   └── ...
 └── data/
-    ├── core.js
-    ├── labels.js
-    ├── divergences.js
-    ├── noPrice.js
-    ├── discountCount.js
-    ├── discountValue.js
-    └── finalize.js
+    └── base histórica embarcada
 ```
 
 Não é necessário backend, Node, banco de dados ou conexão com a internet para o uso normal da versão local.

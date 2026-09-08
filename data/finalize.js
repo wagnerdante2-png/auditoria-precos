@@ -1,0 +1,1 @@
+(()=>{const d=window.AUDITORIA_DATA;d.records=[];const keys=["labels","divergences","noPrice","discountCount","discountValue"];for(const s of d.stores){for(let i=0;i<d.months.length;i++){const r={storeId:s.id,month:d.months[i]};let any=false;for(const k of keys){const v=d.series[k][s.id][i];r[k]=v;if(v!==null)any=true}if(any)d.records.push(r)}}})();

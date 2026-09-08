@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Auditoria de Preços | Maravilhas do Lar</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AP</div>
+        <div>
+          <strong>Auditoria de Preços</strong>
+          <span>Inteligência Operacional</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">◆</span><span>Visão Executiva</span>
+        </button>
+        <button class="nav-item" data-view="stores">
+          <span class="nav-icon">▦</span><span>Lojas</span>
+        </button>
+        <button class="nav-item" data-view="regions">
+          <span class="nav-icon">◈</span><span>Regionais</span>
+        </button>
+        <button class="nav-item" data-view="evolution">
+          <span class="nav-icon">⌁</span><span>Evolução Mensal</span>
+        </button>
+        <button class="nav-item" data-view="database">
+          <span class="nav-icon">≣</span><span>Base de Dados</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="status-dot"></div>
+        <div>
+          <strong>Base embarcada</strong>
+          <span>Sem backend • Navegação local</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PAINEL CORPORATIVO</p>
+          <h1 id="page-title">Visão Executiva</h1>
+        </div>
+
+        <div class="topbar-controls">
+          <label class="control">
+            <span>Competência</span>
+            <div class="month-control">
+              <button id="prev-month" class="icon-btn" title="Mês anterior">‹</button>
+              <select id="month-select"></select>
+              <button id="next-month" class="icon-btn" title="Próximo mês">›</button>
+            </div>
+          </label>
+
+          <label class="control">
+            <span>Escopo</span>
+            <select id="scope-type">
+              <option value="network">Total Rede</option>
+              <option value="region">Regional</option>
+              <option value="store">Loja</option>
+            </select>
+          </label>
+
+          <label class="control control-wide" id="scope-detail-wrap">
+            <span>Seleção</span>
+            <select id="scope-detail" disabled>
+              <option value="">Rede completa</option>
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <section id="view-dashboard" class="view active"></section>
+      <section id="view-stores" class="view"></section>
+      <section id="view-regions" class="view"></section>
+      <section id="view-evolution" class="view"></section>
+      <section id="view-database" class="view"></section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="data/auditoria-data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

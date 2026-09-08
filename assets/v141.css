@@ -1,0 +1,147 @@
+/* ========================================================================
+   v1.4.1 — LEGIBILIDADE + IDENTIDADE DA ÁREA
+   ======================================================================== */
+:root{--sidebar:220px}
+body{font-size:14px;line-height:1.42}
+.sidebar{padding:16px 12px;gap:15px}
+.mdl-logo{width:166px;margin-bottom:9px}
+.product-name strong{font-size:14px;line-height:1.25}
+.product-name span{font-size:11px;line-height:1.35}
+.nav{gap:5px}
+.nav-item{font-size:13px;padding:11px 11px;gap:11px;line-height:1.25}
+.nav-item span{width:15px;font-size:13px}
+.area-seal{padding:12px 7px 10px}
+.area-seal>span{font-size:10px;color:#a4b1c1;letter-spacing:.1em;margin-bottom:7px}
+.area-seal img{
+  width:152px;
+  max-width:100%;
+  opacity:1;
+  filter:brightness(0) saturate(100%) invert(100%);
+}
+.base-status{padding:10px 10px;gap:9px}
+.base-status strong{font-size:11px}
+.base-status span{font-size:10px;line-height:1.35}
+
+.topbar{padding:13px 18px;gap:20px}
+.eyebrow{font-size:10px}
+.top-title h1{font-size:24px;line-height:1.15;margin:3px 0 2px}
+.top-title p{font-size:11px}
+.global-controls label>span{font-size:10px}
+.global-controls select,.icon-btn,.report-btn,.filter,.btn{font-size:12px}
+.global-controls select{min-width:132px}
+.global-controls .wide select{min-width:184px}
+.report-btn{font-size:11px}
+
+.view{padding:14px 18px 38px}
+.hero{padding:15px 16px;margin-bottom:11px}
+.hero h2{font-size:22px;line-height:1.2}
+.hero p{font-size:12px}
+.pill{font-size:10px;padding:6px 9px}
+.hero-stat{padding:9px 11px}
+.hero-stat span{font-size:10px}
+.hero-stat strong{font-size:15px}
+
+.metric-card{padding:13px 14px}
+.metric-card span.label{font-size:10px}
+.metric-card strong{font-size:25px}
+.metric-card small{font-size:11px;line-height:1.4}
+.has-tip:hover:after{font-size:12px;max-width:390px;padding:9px 10px}
+
+.panel{padding:13px 14px}
+.panel-head h3{font-size:15px}
+.panel-head p{font-size:11px}
+.gauge strong{font-size:22px}
+.gauge span{font-size:10px}
+.bar-row{grid-template-columns:145px 1fr 82px}
+.bar-row span{font-size:11px}
+.bar-row strong{font-size:12px}
+.priority-item{padding:9px 10px}
+.priority-item strong{font-size:12px}
+.priority-item span{font-size:10px}
+.semaphore{font-size:10px;padding:5px 8px}
+
+.toolbar{padding:9px 10px;gap:8px}
+.toolbar input,.toolbar select{height:38px;font-size:12px}
+.toolbar .count{font-size:11px}
+.btn{font-size:11px;height:36px}
+.store-card,.region-card{padding:11px 12px}
+.card-head .code{font-size:11px}
+.card-head .name{font-size:13px;line-height:1.25}
+.card-head .sub{font-size:10px;line-height:1.3}
+.dense>div{padding:8px 8px}
+.dense span{font-size:9px;letter-spacing:.035em}
+.dense strong{font-size:12px}
+.card-foot .btn{height:32px;font-size:11px}
+.region-accent{margin:-11px -12px 9px}
+
+.compare-explain{padding:11px 13px}
+.compare-explain strong{font-size:12px}
+.compare-explain p{font-size:11px}
+.legend-swatches{font-size:10px}
+.compare-card{padding:11px 12px}
+.compare-card h3{font-size:12px}
+.compare-line{grid-template-columns:98px 1fr 88px}
+.compare-line span{font-size:10px}
+.compare-line strong{font-size:11px}
+.movement-item{padding:9px 10px}
+.movement-item strong{font-size:11px}
+.movement-item span{font-size:10px}
+.movement-item b{font-size:11px}
+
+.metric-btn{height:32px;font-size:10px;padding:0 10px}
+.chart-axis text{font-size:12px}
+.chart-summary>div{padding:9px 10px}
+.chart-summary span{font-size:9px}
+.chart-summary strong{font-size:12px}
+.mini-chart h3{font-size:14px}
+.mini-chart p{font-size:10px}
+.col-item span{font-size:9px}
+.delta-row{grid-template-columns:58px 1fr 66px}
+.delta-row span,.delta-row strong{font-size:10px}
+
+.rec-card{padding:12px 13px}
+.rec-card h3{font-size:13px}
+.rec-card p{font-size:11px;line-height:1.45}
+.rec-action{padding:9px 10px}
+.rec-action strong{font-size:9px}
+.rec-action span{font-size:11px}
+.rec-card small{font-size:10px}
+
+.legend-box{padding:10px 11px}
+.legend-box strong{font-size:11px}
+.legend-box p{font-size:10px}
+.data-table th,.data-table td{padding:9px 8px}
+.data-table th{font-size:9px}
+.data-table td{font-size:11px}
+.cell-metric small{font-size:9px}
+
+.modal-head{padding:16px 18px}
+.modal-head span{font-size:10px}
+.modal-head h2{font-size:22px}
+.modal-head p{font-size:11px}
+.modal-body{padding:14px 16px 18px}
+.modal-kpis>div{padding:10px 11px}
+.modal-kpis span{font-size:9px}
+.modal-kpis strong{font-size:17px}
+.modal-kpis small{font-size:10px}
+.modal-chart{padding:11px}
+.modal-chart h3{font-size:13px}
+.modal-chart p{font-size:10px}
+.modal-note{font-size:11px;line-height:1.45;padding:10px 11px}
+.toast{font-size:12px}
+
+@media(max-width:1500px){
+  :root{--sidebar:210px}
+  .store-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:1100px){
+  .app-shell{grid-template-columns:190px 1fr;--sidebar:190px}
+  .nav-item{font-size:12px}
+  .area-seal img{width:138px}
+  .top-title h1{font-size:22px}
+}
+@media(max-width:760px){
+  body{font-size:13px}
+  .nav-item{font-size:13px}
+  .area-seal img{width:150px}
+}

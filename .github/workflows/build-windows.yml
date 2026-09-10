@@ -109,12 +109,12 @@ jobs:
                   }
               }
           }
-          '@ | Set-Content -Path build/Launcher.cs -Encoding UTF8
+          '@ | Set-Content -Path build\\Launcher.cs -Encoding UTF8
 
           $csc = "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
           if (!(Test-Path $csc)) { throw "Compilador C# do Windows não encontrado." }
 
-          & $csc /nologo /target:winexe /optimize+ /out:build/AuditoriaPrecosV142.exe /resource:build/site.zip,AuditoriaPrecos.Site.zip /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll build/Launcher.cs
+          & $csc /nologo /target:winexe /optimize+ /out:build\\AuditoriaPrecosV142.exe /resource:build\\site.zip,AuditoriaPrecos.Site.zip /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll build/Launcher.cs
 
           if (!(Test-Path build/AuditoriaPrecosV142.exe)) { throw "Executável não foi gerado." }
 

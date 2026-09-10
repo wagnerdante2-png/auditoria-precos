@@ -48,8 +48,8 @@ Para etiquetas/atingimento, aumento é favorável. Para divergências, produtos 
 - Etiquetas auditadas: **424.421**
 - Divergências: **2.820**
 - Produtos sem preço: **21.184**
-- Quantidade de descontos: **3.028**
-- Valor de descontos: **R$ 33.419,38**
+- Quantidade de descontos: **2.923**
+- Valor de descontos: **R$ 31.752,38**
 - Lojas com pelo menos 6.000 etiquetas: **42 de 60**
 
 ## Estrutura ativa

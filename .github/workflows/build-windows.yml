@@ -33,6 +33,27 @@ jobs:
           if (Test-Path README.md) { Copy-Item README.md build/site/README.md }
           Compress-Archive -Path build/site/* -DestinationPath build/site.zip -Force
 
+      - name: Smoke test local UI
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $candidates = @(
+            (Join-Path ${env:ProgramFiles(x86)} "Microsoft\Edge\Application\msedge.exe"),
+            (Join-Path $env:ProgramFiles "Microsoft\Edge\Application\msedge.exe"),
+            (Join-Path $env:ProgramFiles "Google\Chrome\Application\chrome.exe")
+          ) | Where-Object { $_ -and (Test-Path $_) }
+          if (-not $candidates) { throw "Navegador Chromium não encontrado para smoke test." }
+          $browser = $candidates[0]
+          $page = (Resolve-Path "build\site\index.html").Path -replace "\\","/"
+          $uri = "file:///" + $page
+          $domFile = Join-Path $PWD "build\smoke-dom.html"
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --virtual-time-budget=3000 --dump-dom $uri 2>$null | Set-Content -Path $domFile -Encoding UTF8
+          $dom = Get-Content -Raw $domFile
+          if ($dom -notmatch '<option value="2026-08"') { throw "Competências não foram carregadas." }
+          if ($dom -notmatch 'Etiquetas auditadas') { throw "Dashboard não foi renderizado." }
+          if ($dom -notmatch '424\.421') { throw "Total de etiquetas de agosto não apareceu no dashboard." }
+          Write-Host "Smoke test OK: dados e dashboard renderizados."
+
       - name: Build single-file Windows launcher
         shell: pwsh
         run: |

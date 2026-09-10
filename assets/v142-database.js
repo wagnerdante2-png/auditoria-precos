@@ -182,8 +182,7 @@
     const months=monthRange(state.from,state.to),aaMonths=shiftedMonths(months,-12);
     for(const x of list) rows.push([x.status.label,`${x.s.code} - ${x.s.name}`,x.s.region,x.cur.labels,x.cur.att==null?'':x.cur.att,x.cur.divergences,x.cur.noPrice,x.cur.discountCount,aaMonths.length?x.aa.discountCount:'',x.cur.discountValue,aaMonths.length?x.aa.discountValue:'']);
     const esc=v=>`\"${String(v??'').replace(/\"/g,'\"\"')}\"`;
-    const csv='\\uFEFF'+rows.map(r=>r.map(esc).join(';')).join('\\r\
-');
+    const csv='\uFEFF'+rows.map(r=>r.map(esc).join(';')).join('\r\n');
     const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
     a.href=url;a.download=`auditoria-precos-${periodLabel.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase()}.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
   }

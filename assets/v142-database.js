@@ -14,7 +14,7 @@
   let enhancing=false;
 
   const $=id=>document.getElementById(id);
-  const safe=v=>v==null?'':String(v).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));
+  const safe=v=>v==null?'':String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt=(v,type='integer')=>v==null||Number.isNaN(v)?'—':type==='currency'?cf.format(v):type==='percent'?pf.format(v)+'%':nf.format(Math.round(v));
   const sum=arr=>arr.reduce((a,v)=>a+(Number.isFinite(v)?v:0),0);
   const pct=(a,b)=>a==null||b==null||b===0?null:(a-b)/Math.abs(b)*100;

@@ -52,7 +52,31 @@ jobs:
           if ($dom -notmatch '<option value="2026-08"') { throw "Competências não foram carregadas." }
           if ($dom -notmatch 'Etiquetas auditadas') { throw "Dashboard não foi renderizado." }
           if ($dom -notmatch '424\.421') { throw "Total de etiquetas de agosto não apareceu no dashboard." }
-          Write-Host "Smoke test OK: dados e dashboard renderizados."
+          if ($dom -notmatch 'class="grid-6"') { throw "Estrutura visual v1.4 original não foi renderizada." }
+
+          $dbUri = $uri + "#database"
+          $dbDomFile = Join-Path $PWD "build\smoke-db-dom.html"
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --virtual-time-budget=3000 --dump-dom $dbUri 2>$null | Set-Content -Path $dbDomFile -Encoding UTF8
+          $dbDom = Get-Content -Raw $dbDomFile
+          if ($dbDom -notmatch 'class="data-table"') { throw "Base de Dados não foi renderizada no layout v1.4." }
+          if ($dbDom -notmatch 'ML41') { throw "Dados das lojas não apareceram na Base de Dados." }
+
+          $dashShot = Join-Path $PWD "build\dashboard.png"
+          $dbShot = Join-Path $PWD "build\database.png"
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=$dashShot" $uri 2>$null
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=$dbShot" $dbUri 2>$null
+          if (!(Test-Path $dashShot) -or !(Test-Path $dbShot)) { throw "Capturas de validação visual não foram geradas." }
+          Write-Host "Smoke test OK: dados, dashboard e Base de Dados renderizados no layout v1.4."
+
+      - name: Upload visual validation
+        uses: actions/upload-artifact@v4
+        with:
+          name: AuditoriaPrecosV144-VisualCheck
+          path: |
+            build/dashboard.png
+            build/database.png
+          if-no-files-found: error
+          retention-days: 3
 
       - name: Build single-file Windows launcher
         shell: pwsh
@@ -68,7 +92,7 @@ jobs:
           internal static class Program
           {
               private const string ProductRoot = "MaravilhasDoLar";
-              private const string ProductFolder = "AuditoriaPrecosV143";
+              private const string ProductFolder = "AuditoriaPrecosV144";
               private const string ResourceName = "AuditoriaPrecos.Site.zip";
 
               [STAThread]
@@ -83,7 +107,7 @@ jobs:
                       );
                       string siteDir = Path.Combine(baseDir, "site");
                       string versionFile = Path.Combine(baseDir, ".build");
-                      const string buildId = "2026-09-10-v1.4.3-data-render-fix";
+                      const string buildId = "2026-09-10-v1.4.4-layout-restored";
 
                       bool needsExtract = !File.Exists(versionFile)
                           || File.ReadAllText(versionFile).Trim() != buildId
@@ -96,7 +120,7 @@ jobs:
 
                           Directory.CreateDirectory(siteDir);
 
-                          string tempZip = Path.Combine(Path.GetTempPath(), "AuditoriaPrecosV143-" + Guid.NewGuid().ToString("N") + ".zip");
+                          string tempZip = Path.Combine(Path.GetTempPath(), "AuditoriaPrecosV144-" + Guid.NewGuid().ToString("N") + ".zip");
                           using (Stream input = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName))
                           {
                               if (input == null) throw new InvalidOperationException("Pacote interno do painel não encontrado.");
@@ -136,24 +160,24 @@ jobs:
           if (!(Test-Path $csc)) { throw "Compilador C# do Windows não encontrado." }
 
           $source = (Resolve-Path "build\\Launcher.cs").Path
-          $outExe = Join-Path $PWD "build\\AuditoriaPrecosV143.exe"
+          $outExe = Join-Path $PWD "build\\AuditoriaPrecosV144.exe"
           $siteZip = (Resolve-Path "build\\site.zip").Path
           & $csc /nologo /target:winexe /optimize+ "/out:$outExe" "/resource:$siteZip,AuditoriaPrecos.Site.zip" /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll $source
 
-          if (!(Test-Path build/AuditoriaPrecosV143.exe)) { throw "Executável não foi gerado." }
+          if (!(Test-Path build/AuditoriaPrecosV144.exe)) { throw "Executável não foi gerado." }
 
       - name: Verify executable
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $f = Get-Item build/AuditoriaPrecosV143.exe
+          $f = Get-Item build/AuditoriaPrecosV144.exe
           if ($f.Length -lt 50000) { throw "Executável gerado parece incompleto: $($f.Length) bytes" }
-          Get-FileHash build/AuditoriaPrecosV143.exe -Algorithm SHA256
+          Get-FileHash build/AuditoriaPrecosV144.exe -Algorithm SHA256
 
       - name: Upload executable
         uses: actions/upload-artifact@v4
         with:
-          name: AuditoriaPrecosV143-Windows
-          path: build/AuditoriaPrecosV143.exe
+          name: AuditoriaPrecosV144-Windows
+          path: build/AuditoriaPrecosV144.exe
           if-no-files-found: error
           retention-days: 14

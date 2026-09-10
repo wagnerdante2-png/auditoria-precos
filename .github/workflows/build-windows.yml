@@ -1,0 +1,135 @@
+name: Build Windows Executable
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "assets/**"
+      - "data/**"
+      - ".github/workflows/build-windows.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare embedded site
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          New-Item -ItemType Directory -Force -Path build/site | Out-Null
+          Copy-Item index.html build/site/index.html
+          Copy-Item assets build/site/assets -Recurse
+          Copy-Item data build/site/data -Recurse
+          if (Test-Path README.md) { Copy-Item README.md build/site/README.md }
+          Compress-Archive -Path build/site/* -DestinationPath build/site.zip -Force
+
+      - name: Build single-file Windows launcher
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          @'
+          using System;
+          using System.Diagnostics;
+          using System.IO;
+          using System.IO.Compression;
+          using System.Reflection;
+
+          internal static class Program
+          {
+              private const string ProductRoot = "MaravilhasDoLar";
+              private const string ProductFolder = "AuditoriaPrecosV142";
+              private const string ResourceName = "AuditoriaPrecos.Site.zip";
+
+              [STAThread]
+              private static void Main()
+              {
+                  try
+                  {
+                      string baseDir = Path.Combine(
+                          Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                          ProductRoot,
+                          ProductFolder
+                      );
+                      string siteDir = Path.Combine(baseDir, "site");
+                      string versionFile = Path.Combine(baseDir, ".build");
+                      const string buildId = "2026-09-10-v1.4.2";
+
+                      bool needsExtract = !File.Exists(versionFile)
+                          || File.ReadAllText(versionFile).Trim() != buildId
+                          || !File.Exists(Path.Combine(siteDir, "index.html"));
+
+                      if (needsExtract)
+                      {
+                          if (Directory.Exists(siteDir))
+                              Directory.Delete(siteDir, true);
+
+                          Directory.CreateDirectory(siteDir);
+
+                          string tempZip = Path.Combine(Path.GetTempPath(), "AuditoriaPrecosV142-" + Guid.NewGuid().ToString("N") + ".zip");
+                          using (Stream input = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName))
+                          {
+                              if (input == null) throw new InvalidOperationException("Pacote interno do painel não encontrado.");
+                              using (FileStream output = File.Create(tempZip))
+                                  input.CopyTo(output);
+                          }
+
+                          ZipFile.ExtractToDirectory(tempZip, siteDir);
+                          File.Delete(tempZip);
+                          Directory.CreateDirectory(baseDir);
+                          File.WriteAllText(versionFile, buildId);
+                      }
+
+                      string index = Path.Combine(siteDir, "index.html");
+                      var psi = new ProcessStartInfo
+                      {
+                          FileName = index,
+                          UseShellExecute = true,
+                          WorkingDirectory = siteDir
+                      };
+                      Process.Start(psi);
+                  }
+                  catch (Exception ex)
+                  {
+                      System.Windows.Forms.MessageBox.Show(
+                          "Não foi possível abrir a Auditoria de Preços.\n\n" + ex.Message,
+                          "Auditoria de Preços",
+                          System.Windows.Forms.MessageBoxButtons.OK,
+                          System.Windows.Forms.MessageBoxIcon.Error
+                      );
+                  }
+              }
+          }
+          '@ | Set-Content -Path build/Launcher.cs -Encoding UTF8
+
+          $csc = "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+          if (!(Test-Path $csc)) { throw "Compilador C# do Windows não encontrado." }
+
+          & $csc /nologo /target:winexe /optimize+ /out:build/AuditoriaPrecosV142.exe /resource:build/site.zip,AuditoriaPrecos.Site.zip /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll build/Launcher.cs
+
+          if (!(Test-Path build/AuditoriaPrecosV142.exe)) { throw "Executável não foi gerado." }
+
+      - name: Verify executable
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $f = Get-Item build/AuditoriaPrecosV142.exe
+          if ($f.Length -lt 50000) { throw "Executável gerado parece incompleto: $($f.Length) bytes" }
+          Get-FileHash build/AuditoriaPrecosV142.exe -Algorithm SHA256
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: AuditoriaPrecosV142-Windows
+          path: build/AuditoriaPrecosV142.exe
+          if-no-files-found: error
+          retention-days: 14

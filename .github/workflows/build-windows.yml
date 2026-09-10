@@ -114,7 +114,10 @@ jobs:
           $csc = "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
           if (!(Test-Path $csc)) { throw "Compilador C# do Windows não encontrado." }
 
-          & $csc /nologo /target:winexe /optimize+ /out:build\\AuditoriaPrecosV142.exe /resource:build\\site.zip,AuditoriaPrecos.Site.zip /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll build/Launcher.cs
+          $source = (Resolve-Path "build\\Launcher.cs").Path
+          $outExe = Join-Path $PWD "build\\AuditoriaPrecosV142.exe"
+          $siteZip = (Resolve-Path "build\\site.zip").Path
+          & $csc /nologo /target:winexe /optimize+ "/out:$outExe" "/resource:$siteZip,AuditoriaPrecos.Site.zip" /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll $source
 
           if (!(Test-Path build/AuditoriaPrecosV142.exe)) { throw "Executável não foi gerado." }
 

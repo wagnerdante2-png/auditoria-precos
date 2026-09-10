@@ -63,8 +63,10 @@ jobs:
 
           $dashShot = Join-Path $PWD "build\dashboard.png"
           $dbShot = Join-Path $PWD "build\database.png"
-          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=$dashShot" $uri 2>$null
-          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=$dbShot" $dbUri 2>$null
+          Push-Location build
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=dashboard.png" $uri 2>$null
+          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=database.png" $dbUri 2>$null
+          Pop-Location
           if (!(Test-Path $dashShot) -or !(Test-Path $dbShot)) { throw "Capturas de validação visual não foram geradas." }
           Write-Host "Smoke test OK: dados, dashboard e Base de Dados renderizados no layout v1.4."
 

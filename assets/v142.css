@@ -1,0 +1,63 @@
+/* v1.4.2 — período na Base de Dados + impressão A4 landscape sem corte horizontal */
+.period-host{margin-bottom:8px}
+.period-bar{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap;padding:9px 10px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.period-title{min-width:230px;margin-right:auto}
+.period-title strong,.period-title span{display:block}
+.period-title strong{font-size:11px}
+.period-title span{margin-top:2px;color:var(--muted);font-size:9px}
+.period-bar label{display:flex;flex-direction:column;gap:4px}
+.period-bar label>span{font-size:8px;color:#788ba4;text-transform:uppercase;letter-spacing:.09em;font-weight:700}
+.period-bar select{height:34px;min-width:135px;background:#07111c;border:1px solid #23364d;color:#edf2f8;border-radius:7px;padding:0 9px;font:inherit}
+.period-apply{border-color:#355b78;background:#102033}
+.period-reset{color:#aebccd}
+.period-results[hidden]{display:none!important}
+.period-hero{margin-top:8px}
+.period-table td strong{font-size:inherit}
+.period-table .semaphore{white-space:nowrap}
+.period-table .trend{display:block;margin-top:1px;font-size:8px}
+.period-filter select:disabled{opacity:.45}
+
+@media(max-width:900px){
+  .period-title{width:100%;min-width:0}
+  .period-bar label{flex:1;min-width:140px}
+  .period-bar select{width:100%;min-width:0}
+}
+
+@page{size:A4 landscape;margin:7mm}
+@media print{
+  /* O relatório deve caber integralmente na largura útil do A4 horizontal. */
+  .period-bar,#view-database .toolbar{display:none!important}
+  .period-host{margin:0!important}
+  .period-hero{margin-top:0!important}
+  .table-shell,.period-table-shell{overflow:visible!important;width:100%!important;border:0!important;border-radius:0!important}
+  .data-table,.period-table{width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important;border-collapse:collapse!important}
+  .data-table thead,.period-table thead{display:table-header-group!important;position:static!important}
+  .data-table tr,.period-table tr{break-inside:avoid;page-break-inside:avoid}
+  .data-table th,.data-table td,.period-table th,.period-table td{
+    padding:2.2px 2.5px!important;
+    font-size:6px!important;
+    line-height:1.18!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    vertical-align:top!important;
+  }
+  .data-table th,.period-table th{font-size:5.5px!important;letter-spacing:0!important}
+  .data-table .cell-metric small,.period-table .cell-metric small{font-size:5.2px!important;line-height:1.1!important}
+  .data-table .semaphore,.period-table .semaphore{font-size:5.2px!important;padding:2px 3px!important;gap:2px!important;white-space:nowrap!important}
+  .data-table .semaphore i,.period-table .semaphore i{width:3px!important;height:3px!important}
+  .data-table th:nth-child(1),.data-table td:nth-child(1),.period-table th:nth-child(1),.period-table td:nth-child(1){width:6%}
+  .data-table th:nth-child(2),.data-table td:nth-child(2),.period-table th:nth-child(2),.period-table td:nth-child(2){width:16%}
+  .data-table th:nth-child(3),.data-table td:nth-child(3),.period-table th:nth-child(3),.period-table td:nth-child(3){width:12%}
+  .data-table th:nth-child(4),.data-table td:nth-child(4),.period-table th:nth-child(4),.period-table td:nth-child(4){width:8%}
+  .data-table th:nth-child(5),.data-table td:nth-child(5),.period-table th:nth-child(5),.period-table td:nth-child(5){width:7%}
+  .data-table th:nth-child(6),.data-table td:nth-child(6),.period-table th:nth-child(6),.period-table td:nth-child(6){width:8%}
+  .data-table th:nth-child(7),.data-table td:nth-child(7),.period-table th:nth-child(7),.period-table td:nth-child(7){width:8%}
+  .data-table th:nth-child(8),.data-table td:nth-child(8),.period-table th:nth-child(8),.period-table td:nth-child(8){width:8%}
+  .data-table th:nth-child(9),.data-table td:nth-child(9),.period-table th:nth-child(9),.period-table td:nth-child(9){width:8%}
+  .data-table th:nth-child(10),.data-table td:nth-child(10),.period-table th:nth-child(10),.period-table td:nth-child(10){width:9%}
+  .data-table th:nth-child(11),.data-table td:nth-child(11),.period-table th:nth-child(11),.period-table td:nth-child(11){width:10%}
+  .legend-grid{grid-template-columns:1fr 1fr!important}
+  .legend-box{break-inside:avoid!important}
+  .hero{break-inside:avoid!important}
+}

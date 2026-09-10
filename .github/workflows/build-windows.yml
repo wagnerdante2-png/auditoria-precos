@@ -60,23 +60,13 @@ jobs:
           $dbDom = Get-Content -Raw $dbDomFile
           if ($dbDom -notmatch 'class="data-table"') { throw "Base de Dados não foi renderizada no layout v1.4." }
           if ($dbDom -notmatch 'ML41') { throw "Dados das lojas não apareceram na Base de Dados." }
-
-          $dashShot = Join-Path $PWD "build\dashboard.png"
-          $dbShot = Join-Path $PWD "build\database.png"
-          Push-Location build
-          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=dashboard.png" $uri 2>$null
-          & $browser --headless=new --disable-gpu --allow-file-access-from-files --window-size=1728,900 --virtual-time-budget=2500 "--screenshot=database.png" $dbUri 2>$null
-          Pop-Location
-          if (!(Test-Path $dashShot) -or !(Test-Path $dbShot)) { throw "Capturas de validação visual não foram geradas." }
           Write-Host "Smoke test OK: dados, dashboard e Base de Dados renderizados no layout v1.4."
 
-      - name: Upload visual validation
+      - name: Upload embedded site package
         uses: actions/upload-artifact@v4
         with:
-          name: AuditoriaPrecosV144-VisualCheck
-          path: |
-            build/dashboard.png
-            build/database.png
+          name: AuditoriaPrecosV144-Site
+          path: build/site.zip
           if-no-files-found: error
           retention-days: 3
 

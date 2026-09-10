@@ -47,7 +47,7 @@ jobs:
           internal static class Program
           {
               private const string ProductRoot = "MaravilhasDoLar";
-              private const string ProductFolder = "AuditoriaPrecosV142";
+              private const string ProductFolder = "AuditoriaPrecosV143";
               private const string ResourceName = "AuditoriaPrecos.Site.zip";
 
               [STAThread]
@@ -62,7 +62,7 @@ jobs:
                       );
                       string siteDir = Path.Combine(baseDir, "site");
                       string versionFile = Path.Combine(baseDir, ".build");
-                      const string buildId = "2026-09-10-v1.4.2";
+                      const string buildId = "2026-09-10-v1.4.3-data-render-fix";
 
                       bool needsExtract = !File.Exists(versionFile)
                           || File.ReadAllText(versionFile).Trim() != buildId
@@ -75,7 +75,7 @@ jobs:
 
                           Directory.CreateDirectory(siteDir);
 
-                          string tempZip = Path.Combine(Path.GetTempPath(), "AuditoriaPrecosV142-" + Guid.NewGuid().ToString("N") + ".zip");
+                          string tempZip = Path.Combine(Path.GetTempPath(), "AuditoriaPrecosV143-" + Guid.NewGuid().ToString("N") + ".zip");
                           using (Stream input = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName))
                           {
                               if (input == null) throw new InvalidOperationException("Pacote interno do painel não encontrado.");
@@ -115,24 +115,24 @@ jobs:
           if (!(Test-Path $csc)) { throw "Compilador C# do Windows não encontrado." }
 
           $source = (Resolve-Path "build\\Launcher.cs").Path
-          $outExe = Join-Path $PWD "build\\AuditoriaPrecosV142.exe"
+          $outExe = Join-Path $PWD "build\\AuditoriaPrecosV143.exe"
           $siteZip = (Resolve-Path "build\\site.zip").Path
           & $csc /nologo /target:winexe /optimize+ "/out:$outExe" "/resource:$siteZip,AuditoriaPrecos.Site.zip" /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /reference:System.Windows.Forms.dll $source
 
-          if (!(Test-Path build/AuditoriaPrecosV142.exe)) { throw "Executável não foi gerado." }
+          if (!(Test-Path build/AuditoriaPrecosV143.exe)) { throw "Executável não foi gerado." }
 
       - name: Verify executable
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $f = Get-Item build/AuditoriaPrecosV142.exe
+          $f = Get-Item build/AuditoriaPrecosV143.exe
           if ($f.Length -lt 50000) { throw "Executável gerado parece incompleto: $($f.Length) bytes" }
-          Get-FileHash build/AuditoriaPrecosV142.exe -Algorithm SHA256
+          Get-FileHash build/AuditoriaPrecosV143.exe -Algorithm SHA256
 
       - name: Upload executable
         uses: actions/upload-artifact@v4
         with:
-          name: AuditoriaPrecosV142-Windows
-          path: build/AuditoriaPrecosV142.exe
+          name: AuditoriaPrecosV143-Windows
+          path: build/AuditoriaPrecosV143.exe
           if-no-files-found: error
           retention-days: 14
